@@ -27,6 +27,8 @@ GET /contents/:id - Get details of a specific content.
 POST /contents - Upload new content.
 PUT /contents/:id - Update content details.
 DELETE /contents/:id - Delete a content.
+POST /favorite/:id - Post the favorite content id
+POST /rateImage/:id - Rate the image
 Payment Endpoints:
 
 POST /payments - Initiate a payment transaction.
