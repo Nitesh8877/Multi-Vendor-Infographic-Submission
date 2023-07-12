@@ -27,6 +27,16 @@ const contentSchema = new mongoose.Schema({
      type: Boolean,
      default: false
      },
+     rating:{
+      type:Number,
+      default:0
+     },
+     favorites:[
+      {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+      }
+     ]
 });
 
 const Content = mongoose.model('Content', contentSchema);

@@ -114,3 +114,53 @@ exports.deleteContent = async (req, res) => {
     });
   }
 };
+
+// Rate an image (thumbs up/thumbs down)
+exports.rateImage = async (req, res) => {
+  try {
+    const contentId = req.params.id;
+    const { rating } = req.body;
+    const content = await Content.findById(contentId);
+    if (!content) {
+      res.status(404).send({ message: 'Content not found' });
+    } else {
+      // Update the rating
+      content.rating = rating;
+      await content.save();
+      res.status(200).send(content);
+    }
+  } catch (error) {
+    res.status(500).send({ 
+      message:"Something went wrong",
+      error: error.message
+     });
+  }
+};
+
+// Mark an image as favorite
+exports.markAsFavorite = async (req, res) => {
+  try {
+    const contentId = req.params.id;
+    const userId = req.username.id; // Assuming you have implemented authentication middleware
+    const content = await Content.findById(contentId);
+    if (!content) {
+      res.status(404).send({ message: 'Content not found' });
+    } else {
+      // Check if the user has already marked the content as favorite
+      const isFavorite = content.favorites.includes(userId);
+      if (isFavorite) {
+        res.status(409).send({ message: 'Content is already marked as favorite' });
+      } else {
+        // Add the user to the favorites list
+        content.favorites.push(userId);
+        await content.save();
+        res.status(200).send(content);
+      }
+    }
+  } catch (error) {
+    res.status(500).send({ 
+      message:"Something went wrong",
+      error: error.message
+     });
+  }
+};

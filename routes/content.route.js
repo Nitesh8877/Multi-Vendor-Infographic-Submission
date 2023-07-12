@@ -6,4 +6,6 @@ module.exports=function(app){
     app.get('/contents/:id',verifyToken,ContentController.getContentById);
     app.put('/contents/:id', verifyToken,ContentController.updateContent);
     app.delete('/contents',verifyToken,ContentController.deleteContent);
+    app.post('/favorite/:id', verifyToken,ContentController.markAsFavorite);
+    app.post('/rateImage/:id', verifyToken,ContentController.rateImage);
 }
